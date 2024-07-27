@@ -48,14 +48,6 @@ change_apsimx_param <- function(exe, file_to_run, param_values) {
 #'
 #' @export
 #'
-#' 
-
-PATH_VEGTHETIMRES_X3 <- ".Simulations.Replacements.Soybean.Phenology.VegetativeThermalTime.Response.X" # 10, 20, X, 40
-PATH_REPTHETIMRES_X3 <- ".Simulations.Replacements.Soybean.Phenology.ReproductiveThermalTime.Response.X"  # 10, 15, X, 40
-PATH_VEGPHOMOD_X1 <- ".Simulations.Replacements.Soybean.Phenology.VegetativePhotoperiodModifier.XYPairs.X" # X, 21.19
-PATH_REPPHOMOD_X1 <- ".Simulations.Replacements.Soybean.Phenology.ReproductivePhotoperiodModifier.XYPairs.X" # X, 21.19
-PATH_EXTCOEFFXY_Y1 <- ".Simulations.Replacements.Soybean.Leaf.ExtinctionCoefficient.XYPairs.Y" # 0.6, 0.4
-
 generate_config_file <- function(param_values) {
   config_file <- tempfile('apsimOnR', fileext = '.conf')
   parameter_names <- names(param_values)
@@ -66,15 +58,16 @@ generate_config_file <- function(param_values) {
     param_value <- as.character(param_values[i])
     lines[i] <- switch(
       param_name,
-      PATH_VEGTHETIMRES_X3 = paste(param_name, "= 10, 20,", param_value, ", 40"),
-      PATH_REPTHETIMRES_X3 = paste(param_name, "= 10, 15,", param_value, ", 40"),
-      PATH_VEGPHOMOD_X1 = paste(param_name, "=", param_value, ", 21.19"),
-      PATH_REPPHOMOD_X1 = paste(param_name, "=", param_value, ", 21.19"),
-      PATH_EXTCOEFFXY_Y1 = paste(param_name, "=", param_value, ", 0.4"),
+      ".Simulations.Replacements.Soybean.Phenology.VegetativeThermalTime.Response.X" = paste(param_name, "= 10, 20,", param_value, ", 40"),
+      ".Simulations.Replacements.Soybean.Phenology.ReproductiveThermalTime.Response.X" = paste(param_name, "= 10, 15,", param_value, ", 40"),
+      ".Simulations.Replacements.Soybean.Phenology.VegetativePhotoperiodModifier.XYPairs.X" = paste(param_name, "=", param_value, ", 21.19"),
+      ".Simulations.Replacements.Soybean.Phenology.ReproductivePhotoperiodModifier.XYPairs.X" = paste(param_name, "=", param_value, ", 21.19"),
+      ".Simulations.Replacements.Soybean.Leaf.ExtinctionCoefficient.XYPairs.Y" = paste(param_name, "=", param_value, ", 0.4"),
       paste(param_name, "=", param_value)
     )
   }
   writeLines(lines, fileConn)
   close(fileConn)
+  print(config_file)
   return(config_file)
 }
