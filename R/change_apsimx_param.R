@@ -68,6 +68,5 @@ generate_config_file <- function(param_values) {
   }
   writeLines(lines, fileConn)
   close(fileConn)
-  print(config_file)
   return(config_file)
 }
