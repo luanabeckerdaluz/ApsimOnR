@@ -58,11 +58,11 @@ generate_config_file <- function(param_values) {
     param_value <- as.character(param_values[i])
     lines[i] <- switch(
       param_name,
-      ".Simulations.Replacements.Soybean.Phenology.VegetativeThermalTime.Response.X" = paste(param_name, "= 10, 20,", param_value, ", 40"),
-      ".Simulations.Replacements.Soybean.Phenology.ReproductiveThermalTime.Response.X" = paste(param_name, "= 10, 15,", param_value, ", 40"),
-      ".Simulations.Replacements.Soybean.Phenology.VegetativePhotoperiodModifier.XYPairs.X" = paste(param_name, "=", param_value, ", 21.19"),
-      ".Simulations.Replacements.Soybean.Phenology.ReproductivePhotoperiodModifier.XYPairs.X" = paste(param_name, "=", param_value, ", 21.19"),
-      ".Simulations.Replacements.Soybean.Leaf.ExtinctionCoefficient.XYPairs.Y" = paste(param_name, "=", param_value, ", 0.4"),
+      ".Simulations.Replacements.Soybean.Phenology.VegetativeThermalTime.Response.X" = paste0(param_name, " = 10, 20, ", param_value, ", 40"),
+      ".Simulations.Replacements.Soybean.Phenology.ReproductiveThermalTime.Response.X" = paste0(param_name, " = 10, 15, ", param_value, ", 40"),
+      ".Simulations.Replacements.Soybean.Phenology.VegetativePhotoperiodModifier.XYPairs.X" = paste0(param_name, " = ", param_value, ", 15.8"),
+      ".Simulations.Replacements.Soybean.Phenology.ReproductivePhotoperiodModifier.XYPairs.X" = paste0(param_name, " = ", param_value, ", 15.8"),
+      ".Simulations.Replacements.Soybean.Leaf.ExtinctionCoefficient.XYPairs.Y" = paste0(param_name, " = ", param_value, ", 0.4"),
       paste(param_name, "=", param_value)
     )
   }
