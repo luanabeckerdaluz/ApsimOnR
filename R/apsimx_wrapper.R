@@ -79,6 +79,10 @@ apsimx_wrapper <- function(model_options,
     stop(paste("apsimx file doesn't exist !", apsimx_file))
   }
   cmd <- paste("\"", apsimx_path, '" /Version', sep='')
+  # on unix, user --version
+  if (.Platform$OS.type == 'unix') {
+    cmd <- paste(apsimx_path, "--version")
+  }
   if (endsWith(apsimx_path, '.dll')) {
     cmd <- paste('dotnet', cmd)
   }
