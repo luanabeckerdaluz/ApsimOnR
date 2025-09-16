@@ -86,8 +86,6 @@ apsimx_wrapper <- function(model_options,
   if (endsWith(apsimx_path, '.dll')) {
     cmd <- paste('dotnet', cmd)
   }
-
-
   val <- system(cmd, wait = TRUE, intern = TRUE)
 
   if ( !is.null(attr(val, "status"))) {
@@ -146,19 +144,31 @@ apsimx_wrapper <- function(model_options,
     }
 
     # Run apsimx ------------------------------------------------------------------
-    cmd <- paste('"', apsimx_path, '" "', file_to_run, '"', sep='')
-
+    cmd <- ""
+    if (.Platform$OS.type == 'unix') {
+      cmd <- paste(apsimx_path, file_to_run)
+    } else {
+      cmd <- paste('"', apsimx_path, '" "', file_to_run, '"', sep='')
+    }
 
     if (!is.null(param_values)) {
-      cmd <- paste(cmd, '/Edit', config_file)
+      if (.Platform$OS.type == 'unix') {
+        cmd <- paste(cmd, '--apply', config_file)
+      } else {
+        cmd <- paste(cmd, '/Edit', config_file)
+      }
     }
 
     if (endsWith(apsimx_path, '.dll')) {
       cmd <- paste('dotnet', cmd)
     }
-    if (model_options$multi_process)  cmd <- paste(cmd, '/MultiProcess')
+    if (model_options$multi_process){
+      print("IN - multi_process")
+      cmd <- paste(cmd, '/MultiProcess')
+    }
 
     if (!is.null(sit_names)) {
+      print("IN - sit_names")
       regex <- paste('(', paste(sit_names, collapse = ')|('), ')', sep = '')
       if (.Platform$OS.type == 'unix') {
         # on unix, need to escape the regex with quotes
@@ -168,6 +178,7 @@ apsimx_wrapper <- function(model_options,
       }
     }
     else if (!is.null(sit_var_dates_mask)) {
+      print("IN - sit_var_dates_mask")
       # This generates a regular expression of simulation names using alternation
       # which will be passed to Models.exe to limit execution to the specified
       # simulation names.
@@ -183,10 +194,10 @@ apsimx_wrapper <- function(model_options,
     print(cmd)
 
     # Portable version for system call
-    run_file_stdout <- system(cmd,wait = TRUE, intern = TRUE)
+    run_file_stdout <- system(cmd, wait = TRUE, intern = TRUE)
 
     # Getting the execution status
-    res$error  <- !is.null(attr(run_file_stdout,"status"))
+    res$error  <- !is.null(attr(run_file_stdout, "status"))
 
     # Preserve .apsimx file in case of error
     if (res$error) {

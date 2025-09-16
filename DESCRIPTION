@@ -1,6 +1,6 @@
 Package: ApsimOnR
 Title: Running the Apsim model with parameters forcing
-Version: 0.0.0.9003
+Version: 0.0.0.9006
 Authors@R: 
     person(given = "Drew",
            family = "Holzworth",
