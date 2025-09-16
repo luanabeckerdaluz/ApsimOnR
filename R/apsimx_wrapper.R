@@ -87,8 +87,6 @@ apsimx_wrapper <- function(model_options,
     cmd <- paste('dotnet', cmd)
   }
 
-  print("Chegou1")
-  print(cmd)
 
   val <- system(cmd, wait = TRUE, intern = TRUE)
 
@@ -96,7 +94,6 @@ apsimx_wrapper <- function(model_options,
     stop(paste(apsimx_path,"is not executable or is not a apsimx executable !"))
   }
 
-  print("Chegou2")
 
   if (base::is.array(param_values) &&
       !all(sapply(1:dim(param_values)[3],function(x) all(param_values[,,x]==param_values[,,1])))) {
@@ -125,9 +122,6 @@ apsimx_wrapper <- function(model_options,
     file.delete(db_file_name)
   }
 
-  print("Chegou3")
-  print(list.files(temp_dir))
-
   for(ip in 1:nb_paramValues) {
 
     # If any parameter value to change
@@ -154,8 +148,6 @@ apsimx_wrapper <- function(model_options,
     # Run apsimx ------------------------------------------------------------------
     cmd <- paste('"', apsimx_path, '" "', file_to_run, '"', sep='')
 
-    print("Chegou4")
-    print(cmd)
 
     if (!is.null(param_values)) {
       cmd <- paste(cmd, '/Edit', config_file)
@@ -188,7 +180,6 @@ apsimx_wrapper <- function(model_options,
       }
     }
 
-    print("Chegou5")
     print(cmd)
 
     # Portable version for system call
@@ -209,7 +200,6 @@ apsimx_wrapper <- function(model_options,
       file.copy(db_file_name, file.path(apsimx_file_dir,backup_db_file))
     }
 
-    print("Chegou6")
 
     # Store results ---------------------------------------------------------------
     results_tmp <- read_apsimx_output(db_file_name,
