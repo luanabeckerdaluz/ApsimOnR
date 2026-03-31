@@ -102,9 +102,8 @@ apsimx_wrapper <- function(model_options,
   file.copy(apsimx_file, file_to_run)
 
   # copying met file
-  met_files <- list.files(model_options$met_files_path,".met$", full.names = TRUE)
+  met_files <- list.files(model_options$met_files_path,"\\.(met|xlsx)$", full.names = TRUE)
   file.copy(met_files, temp_dir)
-
 
   # copying XL file
   obs_files <- list.files(model_options$obs_files_path,".xlsx$", full.names = TRUE)
