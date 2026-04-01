@@ -101,13 +101,21 @@ apsimx_wrapper <- function(model_options,
   db_file_name <- gsub('.apsimx', '.db', file_to_run)
   file.copy(apsimx_file, file_to_run)
 
-  # copying met file
+  # copying met files (.met and .xlsx)
   met_files <- list.files(model_options$met_files_path,"\\.(met|xlsx)$", full.names = TRUE)
   file.copy(met_files, temp_dir)
 
-  # copying XL file
+  # copying .xslx obs files
   obs_files <- list.files(model_options$obs_files_path,".xlsx$", full.names = TRUE)
-  file.copy(obs_files,temp_dir)
+  # Copy only files listed in 'obs_files' that are not listed in 'met_files', to 
+  # ...avoid unnecessary copies. In the 'simple_run_example.R', users are warned 
+  # ...to ensure xlsx filenames are unique across folders when 'obs_files_path' 
+  # ...is different from 'met_files_path'. If 'obs_files_path'=='met_files_path',
+  # ...no files will be copied below.
+  obs_files_not_in_met_files <- setdiff(obs_files, met_files)
+  if (length(obs_files_not_in_met_files) > 0) {
+    file.copy(obs_files_not_in_met_files, temp_dir)
+  }
 
   # Delete .db file if it already exists (just in case)
   if (file.exists(db_file_name)) {

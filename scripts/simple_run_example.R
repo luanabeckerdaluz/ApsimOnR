@@ -36,6 +36,8 @@ situation_name <- "GattonRowSpacingRowSpace50cm"
 met_files_path <- files_path
 
 #' - Observed files path
+#'   If 'obs_files_path' is different from 'met_files_path', 
+#'   ...ensure xlsx filenames are unique across folders
 obs_files_path <- files_path
 
 #' - Setting output variables list
